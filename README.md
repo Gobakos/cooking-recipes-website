@@ -16,7 +16,7 @@ Ensure you have the following installed on your system:
 1. **Navigate to Backend Directory**
 
     ```bash
-    cd backend
+    cd Backend
     ```
 
 2. **Install Dependencies**
@@ -65,7 +65,7 @@ Ensure you have the following installed on your system:
 1. **Navigate to Frontend Directory**
 
     ```bash
-    cd ../frontend
+    cd ../Frontend
     ```
 
 2. **Install Dependencies**
@@ -87,13 +87,13 @@ Ensure you have the following installed on your system:
 ```plaintext
 your-repo/
 │
-├── backend/
+├── Backend/
 │ ├── .env
 │ ├── package.json
 │ ├── app/
 │ └── ...
 │
-├── frontend/
+├── Frontend/
 │ ├── angular.json
 │ ├── package.json
 │ ├── src/
