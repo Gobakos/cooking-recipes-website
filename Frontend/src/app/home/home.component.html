@@ -1,0 +1,39 @@
+<!-- Search Field -->
+<div class="container">
+  <div class="row height d-flex justify-content-center align-items-center">
+    <div class="col-md-8">
+      <!-- Heading for the search field -->
+      <span class="h4">Τι θα μαγειρέψουμε σήμερα;</span>
+
+      <!-- Form for searching recipes -->
+      <form class="search">
+        <!-- Search icon -->
+        <i class="bi bi-search"></i>
+
+        <!-- Input field for entering search query -->
+        <input
+          type="text"
+          class="form-control"
+          placeholder="Κάνε εδώ την αναζήτηση σου"
+          [(ngModel)]="searchTerm"
+          name="searchTerm"
+        />
+
+        <!-- Button to submit search query -->
+        <button
+          type="submit"
+          class="btn btn-primary"
+          (click)="$event.preventDefault(); search()"
+        >
+          Αναζήτηση
+        </button>
+      </form>
+    </div>
+  </div>
+</div>
+
+<!-- 6 Random Recipies -->
+<recipes-listing
+  *ngIf="showContent"
+  [recipes]="randomRecipes"
+></recipes-listing>

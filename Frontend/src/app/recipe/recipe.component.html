@@ -1,0 +1,143 @@
+<div class="container mb-5" *ngIf="showContent" style="max-width: 960px;">
+  <!-- Title -->
+  <div id="title" class="row text-center mt-4">
+    <p class="fs-1 fw-bold">
+      {{ recipe.recipe_title }}
+      <span class="align-text-bottom fs-6 fw-lighter text-body-secondary"
+        >από το χρήστη {{ recipe.user.username }}</span
+      >
+    </p>
+  </div>
+
+  <!-- Category & Subcategory -->
+  <div id="categories" class="row row-cols-auto justify-content-center">
+    <a
+      mdbRipple
+      class="col btn btn-outline-danger btn-floating m-1"
+      routerLink="/results/category/{{ recipe.fcategory_id }}"
+      role="button"
+    >
+      {{ recipe.category.category_name }}
+    </a>
+    <a
+      mdbRipple
+      class="col btn btn-outline-danger btn-floating m-1"
+      routerLink="/results/subcategory/{{ recipe.fsubcategory_id }}"
+      role="button"
+      *ngIf="recipe.subcategory"
+    >
+      {{ recipe.subcategory.subcategory_name }}
+    </a>
+  </div>
+
+  <!-- Some Info -->
+  <div id="first-info" class="row row-cols-auto justify-content-center m-3">
+    <!-- Level -->
+    <div class="col">
+      <ng-container *ngFor="let e of [].constructor(recipe.level).fill()">
+        <img
+          class="align-top"
+          src="assets/images/chef-hat-fill.png"
+          alt=""
+          width="20"
+        />
+      </ng-container>
+      <ng-container *ngFor="let e of [].constructor(5 - recipe.level).fill()">
+        <img
+          class="align-top"
+          src="assets/images/chef-hat.png"
+          alt=""
+          width="20"
+        />
+      </ng-container>
+      {{ difficultyText() }}
+    </div>
+
+    <!-- Total Time -->
+    <div class="col">
+      <i class="bi bi-clock-history"></i>
+      {{
+        calculateTime(recipe.recipe_time_create + recipe.recipe_time_prepare)
+      }}
+    </div>
+
+    <!-- Portion -->
+    <div class="col">
+      <img src="assets/images/portion.png" alt="" width="22" />
+      {{ recipe.recipe_portion }} μερίδες
+    </div>
+  </div>
+
+  <!-- Photo -->
+  <div id="photo" class="row photo m-3">
+    <img src="{{ recipe.path }}" alt="Φωτογραφία Συνταγής" />
+  </div>
+
+  <!-- Some Info -->
+  <div id="sec-info" class="row text-center justify-content-center">
+    <!-- Prepare Time -->
+    <div
+      class="col col-auto border-end border-dark border-opacity-75 border-2 my-auto"
+    >
+      <strong>προετοιμασία</strong><br /><i>{{
+        calculateTime(recipe.recipe_time_prepare)
+      }}</i>
+    </div>
+
+    <!-- Create Time -->
+    <div class="col col-auto my-auto">
+      <strong>μαγείρεμα</strong><br /><i>{{
+        calculateTime(recipe.recipe_time_create)
+      }}</i>
+    </div>
+  </div>
+
+  <!-- Ingridients -->
+  <div id="ingridients" class="row justify-content-center mx-5">
+    <div class="col">
+      <h4>Υλικά</h4>
+      <ul class="ingridients">
+        <li class="ingridient" *ngFor="let e of recipe.ingredients">
+          <label>
+            <input type="checkbox" class="ingridient-checkbox" />
+            @if (e.recipe_ingredients.quantity>0) {
+            {{ e.recipe_ingredients.quantity }}
+            }
+            {{ e.recipe_ingredients.description }}
+            {{ e.ingredient_name }}
+          </label>
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- Execution -->
+  <div id="description" class="row justify-content-center mx-5">
+    <div class="col">
+      <h4>Εκτέλεση</h4>
+      <ul class="description-steps">
+        <li class="description-step my-3" *ngFor="let d of description()">
+          <input type="radio" class="description-step-radio" id="description" />
+          <label for="description">{{ d }}</label>
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- Tags -->
+  <div id="tags" class="row justify-content-center mx-5">
+    <div class="col">
+      <h4>Ετικέτες</h4>
+      <a
+        mdbRipple
+        class="btn btn-outline-danger btn-floating m-1"
+        routerLink="/results/tag/{{ t.tag_name }}"
+        role="button"
+        *ngFor="let t of recipe.tags"
+      >
+        {{ t.tag_name }}
+      </a>
+    </div>
+  </div>
+  <div class="row"></div>
+</div>

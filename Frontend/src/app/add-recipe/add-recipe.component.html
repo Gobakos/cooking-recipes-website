@@ -1,0 +1,252 @@
+<div class="container mx-auto my-5" style="max-width: 800px">
+  <div class="row justify-content-between">
+    <div class="col-auto m-3">
+      <!-- Title -->
+      <h5 class="card-title h5">Προσθήκη Συνταγής</h5>
+    </div>
+  </div>
+  <mat-card>
+    <form class="d-flex flex-column my-3" [formGroup]="addrecipeForm">
+      <!-- Recipe Title Field -->
+      <div class="row mx-3">
+        <h6>Τίτλος Συνταγής</h6>
+        <mat-form-field class="col-10" color="warn">
+          <mat-label>Συμπληρώστε τον τίτλο</mat-label>
+          <input matInput type="text" formControlName="titlo" />
+        </mat-form-field>
+      </div>
+
+      <div class="row mx-3">
+        <h6>Χαρακτηριστικά</h6>
+        <!-- Category Field -->
+        <mat-form-field class="col-4" color="warn">
+          <mat-label>Κατηγορία</mat-label>
+          <mat-select [(value)]="selected_category" formControlName="category">
+            @for (c of categories; track c) {
+            <mat-option [value]="c">{{ c.category_name }}</mat-option>
+            }
+          </mat-select>
+        </mat-form-field>
+
+        <!-- Subcategory Field -->
+        <mat-form-field class="col-4" color="warn">
+          <mat-label>Υποκατηγορία</mat-label>
+          <mat-select
+            [value]="selected_subcategory"
+            formControlName="subcategory"
+          >
+            <mat-option value="">--</mat-option>
+            @for (s of selected_category.subcategories; track s) {
+            <mat-option value="{{ s.subcategory_name }}">
+              {{ s.subcategory_name }}
+            </mat-option>
+            }
+          </mat-select>
+        </mat-form-field>
+      </div>
+
+      <div class="row mx-3">
+        <!-- Level Field -->
+        <mat-form-field class="col-4" color="warn">
+          <mat-label>Επίπεδο Δυσκολίας</mat-label>
+          <mat-select formControlName="level">
+            <mat-option [value]="1">Εύκολη - 1/5</mat-option>
+            <mat-option [value]="2">Εύκολη - 2/5</mat-option>
+            <mat-option [value]="3">Μέτρια - 3/5</mat-option>
+            <mat-option [value]="4">Μέτρια - 4/5</mat-option>
+            <mat-option [value]="5">Δύσκολη - 5/5</mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <!-- Portion Field -->
+        <mat-form-field class="col-4" color="warn">
+          <mat-label>Μερίδες</mat-label>
+          <input
+            matInput
+            type="number"
+            min="0"
+            formControlName="recipe_portion"
+          />
+        </mat-form-field>
+      </div>
+
+      <div class="row mx-3">
+        <!-- Execution Time Field -->
+        <mat-form-field class="col-4" color="warn">
+          <mat-label>Χρόνος Εκτέλεσης (σε λεπτά)</mat-label>
+          <input
+            matInput
+            type="number"
+            min="0"
+            step="5"
+            formControlName="time_create"
+          />
+        </mat-form-field>
+
+        <!-- Prepare Time Field -->
+        <mat-form-field class="col-4" color="warn">
+          <mat-label>Χρόνος Προετοιμασίας (σε λεπτά)</mat-label>
+          <input
+            matInput
+            type="number"
+            min="0"
+            step="5"
+            formControlName="time_prepare"
+          />
+        </mat-form-field>
+      </div>
+
+      <!-- Ingridients Array -->
+      <div class="row mx-3" formArrayName="ingredients">
+        <h6>Υλικά</h6>
+        <ng-container
+          *ngFor="let ingredientForm of ingredients.controls; let i = index"
+        >
+          <div [formGroupName]="i">
+            <!-- Quantity Field -->
+            <mat-form-field class="col-2" color="warn">
+              <mat-label>Ποσότητα</mat-label>
+              <input
+                matInput
+                type="number"
+                min="0"
+                formControlName="quantity"
+              />
+            </mat-form-field>
+
+            <!-- Measure Field -->
+            <mat-form-field class="col-3" color="warn">
+              <mat-label>Μονάδα Μέτρησης</mat-label>
+              <input
+                matInput
+                type="text"
+                #measureInput
+                placeholder="Διάλεξε μια επιλογή"
+                formControlName="description"
+                [matAutocomplete]="measureAuto"
+                (input)="measureFilter(measureInput)"
+                (focus)="measureFilter(measureInput)"
+              />
+              <mat-autocomplete requireSelection #measureAuto="matAutocomplete">
+                <mat-option
+                  *ngFor="let m of measureFilteredOptions"
+                  [value]="m.description"
+                >
+                  {{ m.description }}
+                </mat-option>
+              </mat-autocomplete>
+            </mat-form-field>
+
+            <!-- Ingredient Field -->
+            <mat-form-field class="col-5" color="warn">
+              <mat-label>Υλικό</mat-label>
+              <input
+                matInput
+                type="text"
+                #ingredientInput
+                placeholder="Διάλεξε μια επιλογή"
+                formControlName="ingredient_name"
+                [matAutocomplete]="ingredientsAuto"
+                (input)="ingredientsFilter(ingredientInput)"
+                (focus)="ingredientsFilter(ingredientInput)"
+              />
+              <mat-autocomplete
+                requireSelection
+                #ingredientsAuto="matAutocomplete"
+              >
+                <mat-option
+                  *ngFor="let i of ingredientsFilteredOptions"
+                  [value]="i.ingredient_name"
+                >
+                  {{ i.ingredient_name }}
+                </mat-option>
+              </mat-autocomplete>
+            </mat-form-field>
+
+            <!-- Delete Ingredient Button -->
+            <button mat-icon-button (click)="deleteIngredient(i)">
+              <mat-icon>delete_forever</mat-icon>
+            </button>
+          </div>
+        </ng-container>
+        <div class="pb-3">
+          <button
+            mat-mini-fab
+            (click)="$event.preventDefault(); addIngredient()"
+          >
+            <mat-icon class="add-course-btn">add</mat-icon>
+          </button>
+        </div>
+      </div>
+
+      <!-- Execution Field -->
+      <div class="row mx-3">
+        <h6>Εκτέλεση</h6>
+        <mat-form-field class="col-12" color="warn">
+          <mat-label>Γράψτε τα βήματα εκτέλεσης</mat-label>
+          <textarea matInput type="text" formControlName="perigrafh"></textarea>
+        </mat-form-field>
+      </div>
+
+      <!-- Tags Array -->
+      <div class="row mx-3" formArrayName="tags">
+        <h6>Ετικέτες</h6>
+        <!-- Tag Field -->
+        <mat-form-field class="col-10" color="warn">
+          <mat-label>Ετικέτες</mat-label>
+          <mat-chip-grid #tagGrid>
+            <mat-chip *ngFor="let st of selectedTags" (removed)="remove(st)">
+              {{ st }}
+              <button matChipRemove [attr.aria-label]="'remove ' + st">
+                <mat-icon>cancel</mat-icon>
+              </button>
+            </mat-chip>
+          </mat-chip-grid>
+          <input
+            matInput
+            type="text"
+            #tagInput
+            placeholder="Νέα ετικέτα..."
+            [formControl]="tagControl"
+            [matChipInputFor]="tagGrid"
+            [matAutocomplete]="tagAuto"
+            (input)="tagsFilter(tagInput)"
+            (focus)="tagsFilter(tagInput)"
+          />
+          <mat-autocomplete
+            #tagAuto="matAutocomplete"
+            (optionSelected)="selected($event)"
+          >
+            <mat-option *ngFor="let t of filteredTags" [value]="t.tag_name">
+              {{ t.tag_name }}
+            </mat-option>
+          </mat-autocomplete>
+        </mat-form-field>
+      </div>
+
+      <!-- Photo Field -->
+      <div class="row mx-3">
+        <h6>Φωτογραφία</h6>
+        <input
+          type="file"
+          accept="image/*"
+          class="file-input"
+          #fileUpload
+          (change)="onFileSelect($event)"
+          formControlName="photo"
+        />
+      </div>
+    </form>
+
+    <!-- Submit Button -->
+    <button
+      mat-raised-button
+      class="my-3 mx-auto"
+      color="accent"
+      [disabled]="!addrecipeForm.valid"
+      (click)="submit()"
+    >
+      Υποβολή
+    </button>
+  </mat-card>
+</div>

@@ -1,0 +1,48 @@
+<div class="container col-md-5 h-100">
+  <mat-card class="card-container">
+    <img
+      id="profile-img"
+      src="https://ssl.gstatic.com/accounts/ui/avatar_2x.png"
+      class="profile-img-card"
+      alt="Photo"
+    />
+
+    <!-- Login Form -->
+    <form [formGroup]="loginForm">
+      <!-- Username Field -->
+      <mat-form-field class="mx-3" color="warn">
+        <mat-label>Όνομα Χρήστη</mat-label>
+        <input matInput #input formControlName="username" />
+      </mat-form-field>
+
+      <!-- Password Field -->
+      <mat-form-field class="mx-3" color="warn">
+        <mat-label>Κωδικός Πρόσβασης</mat-label>
+        <input
+          matInput
+          formControlName="password"
+          [type]="hide ? 'password' : 'text'"
+        />
+        <mat-icon matSuffix (click)="hide = !hide">{{
+          hide ? "visibility" : "visibility_off"
+        }}</mat-icon>
+      </mat-form-field>
+
+      <!-- Submit Button -->
+      <button
+        mat-raised-button
+        color="accent"
+        [disabled]="!loginForm.valid"
+        (click)="submit()"
+        style="margin: auto;"
+      >
+        Σύνδεση
+      </button>
+    </form>
+
+    <!-- Link to registration page -->
+    <p class="text-center mt-2">
+      Δεν έχετε λογαριασμό; <a routerLink="/register">Εγγραφή</a>
+    </p>
+  </mat-card>
+</div>

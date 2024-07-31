@@ -1,0 +1,50 @@
+<div class="results mb-5">
+  <!-- When There are No Results for this Search -->
+  <div class="text-nowrap fs-5" *ngIf="recipes.length == 0">
+    Δεν υπάρχουν αποτελέσματα για τη συγκεκριμένη αναζήτηση...
+  </div>
+
+  <!-- When There are Results -->
+  <mat-card class="listing" *ngFor="let recipe of recipes">
+    <!-- Photo -->
+    <img
+      mat-card-image
+      class="listing-photo"
+      src="{{ recipe.path }}"
+      alt="Φωτογραφία Συνταγής"
+    />
+
+    <mat-card-header>
+      <!-- Title -->
+      <h2 class="listing-heading">
+        {{ recipe.recipe_title }}
+      </h2>
+    </mat-card-header>
+
+    <mat-card-content>
+      <!-- Level -->
+      <p class="listing-dificulty">
+        <!-- Display difficulty level -->
+        <ng-container *ngFor="let e of [].constructor(recipe.level).fill()">
+          <img
+            class="align-top"
+            src="assets/images/chef-hat-fill.png"
+            width="20"
+          />
+        </ng-container>
+        <ng-container *ngFor="let e of [].constructor(5 - recipe.level).fill()">
+          <img class="align-top" src="assets/images/chef-hat.png" width="20" />
+        </ng-container>
+        {{ difficultyText(recipe) }}
+        <!-- Display difficulty text -->
+      </p>
+    </mat-card-content>
+
+    <mat-card-actions align="end">
+      <!-- More Info Button -->
+      <button mat-button routerLink="/recipe/{{ recipe.recipe_id }}">
+        Δείτε περισσότερα
+      </button>
+    </mat-card-actions>
+  </mat-card>
+</div>

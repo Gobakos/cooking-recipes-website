@@ -1,0 +1,67 @@
+#categories a {
+  text-decoration: none;
+  cursor: pointer;
+  padding: 2px;
+  border: 1px solid #d1314b;
+  color: #d1314b;
+}
+
+#categories a:hover {
+  background-color: #d1314b;
+  color: #ffffff;
+}
+
+.photo img {
+  width: 100%;
+  height: auto;
+  max-height: 500px;
+  object-fit: cover;
+  object-position: 50%;
+}
+
+.ingridient {
+  list-style: none;
+}
+
+.link-dark {
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.link-dark:hover {
+  color: #d1314b !important;
+}
+
+.ingridients,
+.description-steps {
+  position: relative;
+  list-style: none;
+  padding-left: 20px;
+}
+
+.ingridient-checkbox,
+.description-step-radio {
+  position: absolute;
+  left: -31px;
+  height: 22px;
+  width: 22px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  accent-color: #d1314b;
+}
+
+.description-steps {
+  border-left: 2px solid #d1314b;
+}
+
+.description-step,
+.ingridient {
+  position: relative;
+}
+
+.description-step::after {
+  position: absolute;
+  display: block;
+  top: 0;
+}

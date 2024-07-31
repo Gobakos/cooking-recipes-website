@@ -1,0 +1,42 @@
+body {
+  background-color: #eee; /* Set background color to light gray */
+}
+
+.height {
+  height: 200px; /* Set a fixed height of 200 pixels for the search field */
+}
+
+.search {
+  position: relative;
+  box-shadow: 0 0 40px rgba(51, 51, 51, 0.1); /* Add box shadow effect */
+}
+
+.search input {
+  height: 60px;
+  text-indent: 25px; /* Indent text inside input */
+  border: 2px solid #d6d4d4; /* Set border color */
+}
+
+/* Styling for focused search input */
+.search input:focus {
+  box-shadow: none; /* Remove box shadow on focus */
+  border: 2px solid #bac8d3; /* Change border color on focus */
+}
+
+/* Styling for search icon */
+.search .bi-search {
+  position: absolute;
+  top: 20px;
+  left: 16px;
+}
+
+/* Styling for search button */
+.search button {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  height: 50px;
+  width: 110px;
+  background: #d1314b;
+  border-color: #932743;
+}

@@ -1,0 +1,79 @@
+<!-- Categories Button -->
+<button
+  mat-button
+  [matMenuTriggerFor]="Categories"
+  #MenuTrigger="matMenuTrigger"
+>
+  Κατηγορίες
+</button>
+
+<!-- Categories Dropdown -->
+<mat-menu #Categories="matMenu">
+  <button
+    mat-menu-item
+    *ngFor="let c of categories"
+    routerLink="/results/category/{{ c.category_id }}"
+    [matMenuTriggerFor]="Subcategories"
+    #categoryMenuTrigger="matMenuTrigger"
+    (mouseenter)="categoryMenuTrigger.menuData = { category: c }"
+    (click)="MenuTrigger.closeMenu(); onButtonClick()"
+  >
+    {{ c.category_name }}
+  </button>
+</mat-menu>
+
+<!-- Subcategories Dropdown -->
+<mat-menu #Subcategories="matMenu">
+  <ng-template matMenuContent let-category="category">
+    <button
+      mat-menu-item
+      (click)="onButtonClick()"
+      *ngFor="let s of category.subcategories"
+      routerLink="/results/subcategory/{{ s.subcategory_id }}"
+    >
+      {{ s.subcategory_name }}
+    </button>
+  </ng-template>
+</mat-menu>
+
+<!-- My Recipes Button -->
+<button
+  mat-button
+  (click)="onButtonClick()"
+  routerLink="/myrecipes"
+  *ngIf="storageService.getToken() != null"
+>
+  Οι Συνταγές μου
+</button>
+
+<!-- Login Button -->
+<button
+  mat-button
+  (click)="onButtonClick()"
+  routerLink="/login"
+  *ngIf="storageService.getToken() == null"
+  style="float: right"
+>
+  <i class="bi bi-box-arrow-in-right"></i> Σύνδεση
+</button>
+
+<!-- Register Button -->
+<button
+  mat-button
+  (click)="onButtonClick()"
+  routerLink="/register"
+  *ngIf="storageService.getToken() == null"
+  style="float: right"
+>
+  Εγγραφή
+</button>
+
+<!-- Logout Button -->
+<button
+  mat-button
+  (click)="onLogout(); onButtonClick()"
+  *ngIf="storageService.getToken() != null"
+  style="float: right"
+>
+  <i class="bi bi-box-arrow-left"></i> Αποσύνδεση
+</button>

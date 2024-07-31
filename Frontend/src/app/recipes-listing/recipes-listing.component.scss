@@ -1,0 +1,43 @@
+.results {
+  display: grid;
+  column-gap: 14px;
+  row-gap: 14px;
+  grid-template-columns: repeat(
+    auto-fill,
+    minmax(400px, 400px)
+  ); /* Responsive grid layout */
+  margin: 30px auto; /* Center the grid and add margin */
+  justify-content: center; /* Center content horizontally */
+  align-items: stretch; /* Stretch items to fill vertical space */
+  justify-items: stretch; /* Stretch items to fill horizontal space */
+  max-width: 1500px; /* Limit maximum width */
+}
+
+.listing {
+  justify-content: space-between; /* Space items evenly along the main axis */
+}
+
+/* Styles for recipe titles */
+.listing-heading {
+  margin: 0;
+  padding: 10px 20px 0 20px;
+}
+
+/* Styles for recipe photos */
+.listing-photo {
+  height: 250px;
+  width: 100%;
+  object-fit: cover; /* Ensure images cover the entire container */
+}
+
+/* Styles for recipe difficulty */
+.listing-dificulty {
+  margin: 0;
+  padding: 0 20px 10px;
+}
+
+/* Styles for links within recipe listings */
+section.listing a {
+  text-decoration: none;
+  color: var(--primary-color);
+}

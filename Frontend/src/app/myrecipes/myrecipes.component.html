@@ -1,0 +1,91 @@
+<div class="container my-5">
+  <div class="row justify-content-between">
+    <!-- Title -->
+    <div class="col-auto m-3">
+      <h5 class="card-title h5">Οι Συνταγές μου</h5>
+    </div>
+
+    <!-- Add Recipe Button -->
+    <div class="col-auto">
+      <button mat-mini-fab color="primary" routerLink="/addrecipe">
+        <mat-icon>add</mat-icon>
+      </button>
+    </div>
+  </div>
+
+  <!-- When there are no recipes for the user -->
+  <div class="text-nowrap fs-5" *ngIf="recipes?.length == 0">
+    Δεν έχετε προσθέσει κάποια συνταγή ακόμα.
+  </div>
+
+  <!-- My Recipies Table -->
+  <div class="mat-elevation-z8" *ngIf="recipes?.length != 0">
+    <table mat-table [dataSource]="recipes" class="recipes-table">
+      <!-- Photo Column -->
+      <ng-container matColumnDef="photo">
+        <th mat-header-cell *matHeaderCellDef></th>
+        <td mat-cell *matCellDef="let recipe">
+          <img src="{{ recipe.path }}" alt="" class="photo-sm rounded-circle" />
+        </td>
+      </ng-container>
+
+      <!-- Title Column -->
+      <ng-container matColumnDef="recipe_title">
+        <th mat-header-cell *matHeaderCellDef>Συνταγή</th>
+        <td mat-cell *matCellDef="let recipe">
+          <a
+            routerLink="/recipe/{{ recipe.recipe_id }}"
+            class="link-dark link-underline link-underline-opacity-0"
+            >{{ recipe.recipe_title }}</a
+          >
+        </td>
+      </ng-container>
+
+      <!-- Created Column -->
+      <ng-container matColumnDef="created">
+        <th mat-header-cell *matHeaderCellDef>Δημιουργία</th>
+        <td mat-cell *matCellDef="let recipe">
+          {{ formatDate(recipe.createdAt) }}
+        </td>
+      </ng-container>
+
+      <!-- Updated Column -->
+      <ng-container matColumnDef="updated">
+        <th mat-header-cell *matHeaderCellDef>Ενημέρωση</th>
+        <td mat-cell *matCellDef="let recipe">
+          {{ formatDate(recipe.updatedAt) }}
+        </td>
+      </ng-container>
+
+      <!-- Actions Column -->
+      <ng-container matColumnDef="actions">
+        <th mat-header-cell *matHeaderCellDef>Ενέργειες</th>
+        <td mat-cell *matCellDef="let recipe">
+          <!-- Button for edit -->
+          <button
+            mat-icon-button
+            class="text-primary"
+            style="transform: scale(0.8)"
+            routerLink="/editrecipe/{{ recipe.recipe_id }}"
+          >
+            <mat-icon>edit</mat-icon>
+          </button>
+
+          <!-- Button for delete -->
+          <button
+            mat-icon-button
+            color="accent"
+            style="transform: scale(0.8)"
+            (click)="deleteRecipe(recipe.recipe_id)"
+          >
+            <mat-icon>delete</mat-icon>
+          </button>
+        </td>
+      </ng-container>
+
+      <!-- Define header and row definitions -->
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+    </table>
+  </div>
+</div>

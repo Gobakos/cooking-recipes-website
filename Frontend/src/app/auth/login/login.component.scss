@@ -1,0 +1,27 @@
+.card-container {
+  /* Center the card horizontally with some margin */
+  margin: 50px auto;
+  /* Set maximum width for the card */
+  max-width: 400px !important; /* !important added to override any other styles */
+  /* Add padding to the card */
+  padding: 40px 40px;
+}
+
+form {
+  /* Arrange form elements in a vertical column */
+  display: flex;
+  flex-direction: column;
+}
+
+.profile-img-card {
+  /* Style for the profile image */
+  width: 96px;
+  height: 96px;
+  /* Center the image horizontally with some bottom margin */
+  margin: 0 auto 10px;
+  display: block;
+  -moz-border-radius: 50%;
+  -webkit-border-radius: 50%;
+  /* Rounded border for circular appearance */
+  border-radius: 50%;
+}

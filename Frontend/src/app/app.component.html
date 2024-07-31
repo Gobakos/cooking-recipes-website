@@ -1,0 +1,115 @@
+<!-- Top Bar -->
+<mat-toolbar class="navbar navbar-expand-lg">
+  <!-- Logo -->
+  <a class="navbar-brand" routerLink="">
+    <img src="assets/images/cook-book.png" alt="Logo" width="50px" />
+    Κουζίνα AUEB
+  </a>
+
+  <!-- Menu Options -->
+  <div fxShow="true" fxHide.lt-md="true" style="width: 100%">
+    <menu-options [categories]="categories"></menu-options>
+  </div>
+
+  <!-- Sidenav Button -->
+  <div fxShow="true" fxHide.gt-sm="true">
+    <button mat-icon-button (click)="sidenav.toggle()">
+      <mat-icon>menu</mat-icon>
+    </button>
+  </div>
+</mat-toolbar>
+
+<!-- Sidenav -->
+<mat-sidenav-container fxFlexFill class="container">
+  <!-- Sidenav Content -->
+  <mat-sidenav
+    #sidenav
+    fxLayout="column"
+    mode="over"
+    opened="false"
+    fxHide.gt-sm="true"
+  >
+    <menu-options
+      class="d-flex flex-column"
+      [categories]="categories"
+      (buttonClick)="sidenav.close()"
+    ></menu-options>
+  </mat-sidenav>
+
+  <!-- Page Content -->
+  <mat-sidenav-content>
+    <router-outlet></router-outlet>
+
+    <!-- Footer -->
+    <footer class="border-top">
+      <!-- Social media -->
+      <section class="my-4">
+        <!-- Facebook -->
+        <a
+          mdbRipple
+          class="btn btn-outline-danger btn-floating m-1"
+          href="https://www.facebook.com/"
+          role="button"
+        >
+          <i class="bi bi-facebook"></i>
+        </a>
+
+        <!-- Twitter -->
+        <a
+          mdbRipple
+          class="btn btn-outline-danger btn-floating m-1"
+          href="https://twitter.com/?lang=en"
+          role="button"
+        >
+          <i class="bi bi-twitter-x"></i>
+        </a>
+
+        <!-- Google -->
+        <a
+          mdbRipple
+          class="btn btn-outline-danger btn-floating m-1"
+          href="https://www.google.com/"
+          role="button"
+        >
+          <i class="bi bi-google"></i>
+        </a>
+
+        <!-- Instagram -->
+        <a
+          mdbRipple
+          class="btn btn-outline-danger btn-floating m-1"
+          href="https://www.instagram.com/"
+          role="button"
+        >
+          <i class="bi bi-instagram"></i>
+        </a>
+
+        <!-- Linkedin -->
+        <a
+          mdbRipple
+          class="btn btn-outline-danger btn-floating m-1"
+          href="https://gr.linkedin.com/"
+          role="button"
+        >
+          <i class="bi bi-linkedin"></i>
+        </a>
+
+        <!-- Github -->
+        <a
+          mdbRipple
+          class="btn btn-outline-danger btn-floating m-1"
+          href="https://github.com/"
+          role="button"
+        >
+          <i class="bi bi-github"></i>
+        </a>
+      </section>
+      <!-- Copyright -->
+      <div class="text-center p-3">
+        © 2024 Copyright Super Team Gobakos
+        <i class="bi bi-balloon-heart"></i>
+        <p><a routerLink="">cuisineAUEB.edu</a></p>
+      </div>
+    </footer>
+  </mat-sidenav-content>
+</mat-sidenav-container>
